@@ -1,0 +1,17 @@
+{
+  "id": "file-links",
+  "name": "File Links",
+  "description": "Right-click a local file link or image in an agent reply to show it in its folder, open it, or copy its path or image.",
+  "icon": "assets/icon.png",
+  "media": [
+    "assets/screenshot-link.png",
+    "assets/screenshot-image.png",
+    "assets/screenshot-link-zh-CN.png"
+  ],
+  "translations": {
+    "zh-CN": { "description": "右击 Agent 回复里的本地文件链接或图片：在文件夹中显示、打开、复制路径或复制图片。" }
+  },
+  "requirements": {
+    "paseo": ">=0.13.2"
+  }
+}
