@@ -31,11 +31,13 @@
     "client/",
     "server/",
     "shared/",
-    "LICENSE"
+    "LICENSE",
+    "!**/*.test.ts"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test server/*.test.ts"
+    "test": "tsx --test server/*.test.ts",
+    "pack:npm": "node scripts/pack-npm.mjs"
   },
   "devDependencies": {
     "@getpaseo/plugin": "0.13.2",
@@ -48,5 +50,9 @@
     "typescript": "^5.9.3",
     "zod": "^4.4.3"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

@@ -85,6 +85,22 @@ then run `paseo plugin reload file-links` after each change.
 | `server/file-links.ts` | Path resolution and the file manager commands. |
 | `shared/file-links.ts` | The RPC and the link parser, used by both sides. |
 
+### Release
+
+Releases go to npm as `paseo-file-links` through
+[`.github/workflows/release.yml`](.github/workflows/release.yml), with npm Trusted
+Publishing (no npm token). Bump `version` in `package.json`, add a `CHANGELOG.md`
+section, then commit, tag and push:
+
+```bash
+npm run typecheck && npm test && npm run pack:npm   # check the packed file list
+git push origin main
+git tag -a v0.2.0 -m "File Links 0.2.0" && git push origin v0.2.0
+```
+
+The tag push publishes the tarball. Then create the GitHub release from the tag.
+The official registry opens a bump PR for each new npm version.
+
 For errors or unexpected behavior, [open an issue](https://github.com/stv1024/paseo-file-links/issues).
 Include your Paseo version, your OS, and the link text. Logs are available with
 `paseo plugin logs file-links`; remove private paths before you share them.
