@@ -71,19 +71,25 @@ export function parseLocalHref(href: string): LocalHref | null {
 }
 
 export interface RouteContext {
+  serverId?: string;
   agentId?: string;
   workspaceId?: string;
 }
 
 export function getRouteContext(pathname: string): RouteContext {
   const pathOnly = pathname.split(/[?#]/, 1)[0] ?? "";
+  const host = pathOnly.match(/^\/h\/([^/]+)(?:\/|$)/);
+  if (!host?.[1]) {
+    return {};
+  }
+  const serverId = safeDecode(host[1]);
   const agent = pathOnly.match(/^\/h\/[^/]+\/agent\/([^/]+)(?:\/|$)/);
   if (agent?.[1]) {
-    return { agentId: safeDecode(agent[1]) };
+    return { serverId, agentId: safeDecode(agent[1]) };
   }
   const workspace = pathOnly.match(/^\/h\/[^/]+\/workspace\/([^/]+)(?:\/|$)/);
   if (workspace?.[1]) {
-    return { workspaceId: safeDecode(workspace[1]) };
+    return { serverId, workspaceId: safeDecode(workspace[1]) };
   }
-  return {};
+  return { serverId };
 }

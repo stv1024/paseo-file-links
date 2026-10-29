@@ -55,7 +55,8 @@ test("buildCommand selects files and opens folders", () => {
 });
 
 test("getRouteContext reads agent and workspace routes", () => {
-  assert.deepEqual(getRouteContext("/h/srv/agent/abc"), { agentId: "abc" });
-  assert.deepEqual(getRouteContext("/h/srv/workspace/wks_1/x"), { workspaceId: "wks_1" });
+  assert.deepEqual(getRouteContext("/h/srv/agent/abc"), { serverId: "srv", agentId: "abc" });
+  assert.deepEqual(getRouteContext("/h/srv/workspace/wks_1/x"), { serverId: "srv", workspaceId: "wks_1" });
+  assert.deepEqual(getRouteContext("/h/srv/settings"), { serverId: "srv" });
   assert.deepEqual(getRouteContext("/settings"), {});
 });

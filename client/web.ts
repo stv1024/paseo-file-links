@@ -216,7 +216,8 @@ export function installFileLinkMenu(client: PluginClientContext): () => void {
 
   const showMenu = (event: DomEvent, { element, href, image }: MenuTarget) => {
     closeMenu?.();
-    const route = getRouteContext(location.pathname);
+    const { agentId, workspaceId } = getRouteContext(location.pathname);
+    const route = { agentId, workspaceId };
     const call = (action: FileLinkAction): Promise<Resolution> =>
       href
         ? client
@@ -372,8 +373,25 @@ export function installFileLinkMenu(client: PluginClientContext): () => void {
     closeMenu = close;
   };
 
+  // The app loads this plugin once per connected host, and every copy sees the same
+  // right-click. Only the copy whose host owns the open page may answer.
+  // undefined: not known yet. null: the host did not say, so answer every route.
+  let ownServerId: string | null | undefined;
+  void client.paseo.hosts.list().then(
+    (directory) => {
+      ownServerId = directory.self.serverId;
+    },
+    () => {
+      ownServerId = null;
+    },
+  );
+
   const onContextMenu = (event: DomEvent) => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return;
+    }
+    const { serverId } = getRouteContext(location.pathname);
+    if (serverId && ownServerId !== null && serverId !== ownServerId) {
       return;
     }
     const target = findTarget(event);

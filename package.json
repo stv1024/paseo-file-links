@@ -1,7 +1,7 @@
 {
   "name": "paseo-file-links",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Paseo plugin: right-click local file links and images in agent replies to show them in their folder, open them, or copy their path or image.",
   "author": "stv1024",
   "homepage": "https://github.com/stv1024/paseo-file-links#readme",
